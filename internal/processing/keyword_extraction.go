@@ -7,17 +7,30 @@ import (
 	"text_summarizer/internal/utils"
 )
 
-func ExtractKeywords(text string) (tokenclassification.Response, error) {
+type Classifier struct {
+	model tokenclassification.Interface
+}
+
+func (c *Classifier) ExtractKeywords(text string) ([]tokenclassification.Token, error) {
+	return extractKeywords(text, c.model)
+}
+
+func LoadModel() (*Classifier, error) {
 	model, err := tasks.Load[tokenclassification.Interface](&tasks.Config{
 		ModelsDir: utils.GetModelsDir(),
 		ModelName: "dslim/bert-base-NER",
 	})
 
 	if err != nil {
-		return tokenclassification.Response{}, err
+		return nil, err
 	}
 
 	defer tasks.Finalize(model)
+
+	return &Classifier{model: model}, nil
+}
+
+func extractKeywords(text string, model tokenclassification.Interface) ([]tokenclassification.Token, error) {
 
 	params := tokenclassification.Parameters{
 		AggregationStrategy: tokenclassification.AggregationStrategySimple,
@@ -26,8 +39,8 @@ func ExtractKeywords(text string) (tokenclassification.Response, error) {
 	result, err := model.Classify(context.Background(), text, params)
 
 	if err != nil {
-		return tokenclassification.Response{}, err
+		return []tokenclassification.Token{}, err
 	}
 
-	return result, nil
+	return result.Tokens, nil
 }

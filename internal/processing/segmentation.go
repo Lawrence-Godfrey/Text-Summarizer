@@ -5,6 +5,7 @@ import (
 	"github.com/sugarme/tokenizer/pretrained"
 )
 
+// SentencesFromText segments the given text into sentences.
 func SentencesFromText(text string) []string {
 
 	tokenizer, err := english.NewSentenceTokenizer(nil)
@@ -23,6 +24,7 @@ func SentencesFromText(text string) []string {
 	return sentences
 }
 
+// WordsFromSentence tokenizes the given sentence into words.
 func WordsFromSentence(sentence string) []string {
 	tokenizer := pretrained.BertBaseUncased()
 
@@ -37,5 +39,16 @@ func WordsFromSentence(sentence string) []string {
 	for _, w := range encoding.Tokens {
 		words = append(words, w)
 	}
+	return words
+}
+
+// WordsFromSentences tokenizes the given sentences into words.
+func WordsFromSentences(sentences []string) [][]string {
+	var words [][]string
+
+	for _, s := range sentences {
+		words = append(words, WordsFromSentence(s))
+	}
+
 	return words
 }

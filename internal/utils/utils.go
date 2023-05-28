@@ -30,3 +30,12 @@ func GetModelsDir() string {
 
 	return ModelsDir
 }
+
+// Flatten flattens a slice of any type.
+func Flatten[T any](slice []T) []T {
+	var flattened []T
+	for _, s := range slice {
+		flattened = append(flattened, s)
+	}
+	return flattened
+}

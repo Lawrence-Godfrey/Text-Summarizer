@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "text_summarizer/api/proto";
+
+// The request message containing the text to be processed
+message TextRequest {
+  string text = 1;
+}
+
+// The request message containing the words or documents to be processed
+message WordsRequest {
+  repeated string words = 1;
+}
+
+message DocumentsRequest {
+  repeated string documents = 1;
+}
+
+// The response message containing the terms
+message TermResponse {
+  repeated Term terms = 1;
+}
+
+// The Term message
+message Term {
+  string word = 1;
+  float frequency = 2;
+  float inverseDocumentFrequency = 3;
+}
+
+// The response message containing the tokens
+message TokenResponse {
+  repeated Token tokens = 1;
+}
+
+// The Token message
+message Token {
+  string entity = 1;
+  string tag = 2;
+}
+
+// The response message containing the sentences
+message SentenceResponse {
+  repeated string sentences = 1;
+}
+
+// The summarizer service definition
+service Summarizer {
+  rpc TermFrequencies(WordsRequest) returns (TermResponse) {}
+  rpc InverseDocumentFrequency(DocumentsRequest) returns (TermResponse) {}
+  rpc TermFrequencyInverseDocumentFrequency(TermResponse) returns (TermResponse) {}
+  rpc ExtractNamedEntities(TextRequest) returns (TokenResponse) {}
+  rpc SentencesFromText(TextRequest) returns (SentenceResponse) {}
+}

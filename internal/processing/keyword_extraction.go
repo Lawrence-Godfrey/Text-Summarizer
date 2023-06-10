@@ -15,9 +15,9 @@ import (
 type Term struct {
 	Term                     string
 	Count                    int
-	Freq                     float64
-	InverseDocumentFrequency float64
-	TFIDF                    float64
+	Freq                     float32
+	InverseDocumentFrequency float32
+	TFIDF                    float32
 }
 
 // TermFrequencies returns a slice of structs containing the term frequencies of the given text,
@@ -50,7 +50,7 @@ func TermFrequencies(words []string) []*Term {
 
 	// Calculate the frequency of each term.
 	for _, frequency := range sortedFrequencies {
-		frequency.Freq = float64(frequency.Count) / float64(len(words))
+		frequency.Freq = float32(frequency.Count) / float32(len(words))
 	}
 
 	return sortedFrequencies
@@ -71,7 +71,7 @@ func InverseDocumentFrequency(terms []*Term, documents [][]string) []*Term {
 				}
 			}
 		}
-		term.InverseDocumentFrequency = math.Log(float64(len(documents)) / float64(documentsContainingTerm))
+		term.InverseDocumentFrequency = float32(math.Log(float64(len(documents)) / float64(documentsContainingTerm)))
 	}
 
 	// Sort the slice by IDF.

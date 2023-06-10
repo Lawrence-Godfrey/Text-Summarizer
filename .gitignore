@@ -1,5 +1,4 @@
 models
-go.sum
 .idea
 /api/proto/*.pb.go
 /bin/*

@@ -11,7 +11,7 @@ func main() {
 	s := grpc.NewServer()
 	proto.RegisterSummarizerServer(s, &api.Server{})
 
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		panic(err)
 	}

@@ -4,53 +4,62 @@ package proto;
 
 option go_package = "text_summarizer/api/proto";
 
-// The request message containing the text to be processed
-message TextRequest {
+service Summarizer {
+  rpc TermFrequencies(Words) returns (Terms) {}
+  rpc InverseDocumentFrequency(Documents) returns (Terms) {}
+  rpc TermFrequencyInverseDocumentFrequency(Terms) returns (Terms) {}
+  rpc ExtractNamedEntities(Text) returns (Tokens) {}
+  rpc SentencesFromText(Text) returns (Sentences) {}
+  rpc WordsFromText(Text) returns (Words) {}
+}
+
+message Text {
   string text = 1;
 }
 
-// The request message containing the words or documents to be processed
-message WordsRequest {
-  repeated string words = 1;
+message Word {
+  string word = 1;
 }
 
-message DocumentsRequest {
-  repeated string documents = 1;
+message Words {
+  repeated Word words = 1;
 }
 
-// The response message containing the terms
-message TermResponse {
-  repeated Term terms = 1;
+message Sentence {
+  string sentence = 1;
 }
 
-// The Term message
+message Sentences {
+  repeated Sentence sentences = 1;
+}
+
+message Document {
+  string document = 1;
+}
+
+message Documents {
+  repeated Document documents = 1;
+}
+
 message Term {
   string word = 1;
   float frequency = 2;
   float inverseDocumentFrequency = 3;
 }
 
-// The response message containing the tokens
-message TokenResponse {
+message Terms {
+  repeated Term terms = 1;
+}
+
+message Token {
+  string text = 1;
+  int32 start = 2;
+  int32 end = 3;
+  string label = 4;
+  float score = 5;
+}
+
+message Tokens {
   repeated Token tokens = 1;
 }
 
-// The Token message
-message Token {
-  string entity = 1;
-  string tag = 2;
-}
-
-// The response message containing the sentences
-message SentenceResponse {
-  repeated string sentences = 1;
-}
-
-// The summarizer service definition
-service Summarizer {
-  rpc TermFrequencies(WordsRequest) returns (TermResponse) {}
-  rpc InverseDocumentFrequency(DocumentsRequest) returns (TermResponse) {}
-  rpc TermFrequencyInverseDocumentFrequency(TermResponse) returns (TermResponse) {}
-  rpc ExtractNamedEntities(TextRequest) returns (TokenResponse) {}
-  rpc SentencesFromText(TextRequest) returns (SentenceResponse) {}
-}

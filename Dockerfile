@@ -22,7 +22,7 @@ RUN bash scripts/genproto.sh
 RUN bash scripts/build.sh
 
 # Second stage: create a clean image
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
 WORKDIR /app
 

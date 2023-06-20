@@ -1,5 +1,5 @@
 
-![Go Tests](https://github.com/Lawrence-Godfrey/Text-Summarizer/actions/workflows/tests.yml/badge.svg)
+![Go Tests](https://github.com/Lawrence-Godfrey/Text-Summarizer/actions/workflows/tests.yml/badge.svg)   ![GitHub Last Commit](https://img.shields.io/github/last-commit/Lawrence-Godfrey/Text-Summarizer)   ![GitHub](https://img.shields.io/github/license/Lawrence-Godfrey/Text-Summarizer)   ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Lawrence-Godfrey/Text-Summarizer)
 
 
 ## Text Summarizer

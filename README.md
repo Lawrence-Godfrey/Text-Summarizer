@@ -1,4 +1,7 @@
 
+![Go Tests](https://github.com/Lawrence-Godfrey/Text-Summarizer/actions/workflows/tests.yml/badge.svg)
+
+
 ## Text Summarizer
 
 This is a Go microservice using a gRPC API to expose various NLP functionality with the end goal of summarizing pieces of text.

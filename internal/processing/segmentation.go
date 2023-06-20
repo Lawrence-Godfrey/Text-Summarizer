@@ -3,6 +3,7 @@ package processing
 import (
 	"github.com/neurosnap/sentences/english"
 	"github.com/sugarme/tokenizer/pretrained"
+	"strings"
 )
 
 // SentencesFromText segments the given text into sentences.
@@ -19,7 +20,8 @@ func SentencesFromText(text string) []string {
 	// Return a list of sentence strings
 	var sentences []string
 	for _, s := range tokens {
-		sentences = append(sentences, s.Text)
+		trimmedSentence := strings.TrimSpace(s.Text)
+		sentences = append(sentences, trimmedSentence)
 	}
 	return sentences
 }

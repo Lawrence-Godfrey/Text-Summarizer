@@ -2,3 +2,4 @@ models
 .idea
 /api/proto/*.pb.go
 /bin/*
+.env

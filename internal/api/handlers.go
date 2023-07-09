@@ -2,7 +2,11 @@ package api
 
 import (
 	"context"
+	"github.com/joho/godotenv"
+	"os"
+	"strings"
 	"text_summarizer/api/proto"
+	"text_summarizer/internal/clients"
 	"text_summarizer/internal/processing"
 )
 
@@ -80,4 +84,25 @@ func (s *Server) WordsFromText(ctx context.Context, req *proto.Text) (*proto.Wor
 	}
 
 	return &proto.Words{Words: pbWords}, nil
+}
+
+func (s *Server) SummarizeContent(ctx context.Context, req *proto.SummarizationRequest) (*proto.Text, error) {
+	err := godotenv.Load()
+	if err != nil {
+		return nil, err
+	}
+
+	apiURL := os.Getenv("OPENAI_API_URL")
+	apiKey := os.Getenv("OPENAI_API_KEY")
+
+	client := clients.NewOpenAIClient(apiURL, apiKey)
+
+	level := strings.ToLower(req.GetLevel().String())
+
+	summary, err := client.Summarize(req.GetContent().GetText(), level)
+	if err != nil {
+		return nil, err
+	}
+
+	return &proto.Text{Text: summary}, nil
 }

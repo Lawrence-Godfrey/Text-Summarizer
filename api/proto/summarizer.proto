@@ -11,6 +11,7 @@ service Summarizer {
   rpc ExtractNamedEntities(Text) returns (Tokens) {}
   rpc SentencesFromText(Text) returns (Sentences) {}
   rpc WordsFromText(Text) returns (Words) {}
+  rpc SummarizeContent(SummarizationRequest) returns (Text) {}
 }
 
 message Text {
@@ -63,3 +64,13 @@ message Tokens {
   repeated Token tokens = 1;
 }
 
+enum SummarizationLevel {
+  SHORT = 0;
+  MEDIUM = 1;
+  LONG = 2;
+}
+
+message SummarizationRequest {
+  Text content = 1;
+  SummarizationLevel level = 2;
+}
